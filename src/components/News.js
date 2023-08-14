@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import NewsItem from "./NewsItem";
+import Spinner from "./Spinner";
 
 export default class News extends Component {
   constructor() {
@@ -16,38 +17,44 @@ export default class News extends Component {
 
   async componentDidMount() {
     let url =
-      "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=54d98c847ebd4cc19cc5efc901946097&page=1pageSize=20";
+      `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=54d98c847ebd4cc19cc5efc901946097&page=1&pageSize=${this.props.pageSize}`;
+      this.setState({loading:true});
     let data = await fetch(url);
     let parsedData = await data.json();
     this.setState({
       articles: parsedData.articles,
-      totalResults: parsedData.totalResults
+      totalResults: parsedData.totalResults,
+      loading:false
     })
   }
 
   handlePrevClick = async () => {
     let url = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=54d98c847ebd4cc19cc5efc901946097&page=${
       this.state.page - 1
-    }&pageSize=20`;
+    }&pageSize=${this.props.pageSize}`;
+    this.setState({loading:true});
     let data = await fetch(url);
     let parsedData = await data.json();
     console.log(parsedData);
     this.setState({
       page: this.state.page - 1,
-      articles: parsedData.articles
+      articles: parsedData.articles,
+      loading:false
     })
   }
 
   handleNextClick = async () => {
     let url = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=54d98c847ebd4cc19cc5efc901946097&page=${
       this.state.page + 1
-    }&pageSize=20`;
+    }&pageSize=${this.props.pageSize}`;
+    this.setState({loading:true});
     let data = await fetch(url);
     let parsedData = await data.json();
     console.log(parsedData);
     this.setState({
       page: this.state.page + 1,
-      articles: parsedData.articles
+      articles: parsedData.articles,
+      loading:false
     })
   }
 
@@ -55,9 +62,10 @@ export default class News extends Component {
     return (
       <>
         <div className="container my-3">
-          <h2>NEWS MUNCH -TOP HEADLINES</h2>
+          <h2 className="text-center">NEWS MUNCH -TOP HEADLINES</h2>
+          {this.state.loading &&<Spinner/>}
           <div className="row">
-            {this.state.articles.map((element) => {
+            {!this.state.loading && this.state.articles.map((element) => {
               return (
                 <div className="col-md-4" key={element.url}>
                   <NewsItem
@@ -82,7 +90,7 @@ export default class News extends Component {
             </button>
             <button
             // so that it will not show last page empty
-            disabled={(this.state.page+1) > Math.ceil(this.state.totalResults/21)}
+            disabled={this.state.page + 1 > Math.ceil(this.state.totalResults / this.props.pageSize)}
               type="button"
               className="btn btn-dark"
               onClick={this.handleNextClick}
