@@ -1,5 +1,6 @@
 
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
 export class Navbar extends Component {
  
@@ -12,9 +13,9 @@ export class Navbar extends Component {
 
 <nav className="navbar navbar-expand-lg navbar-light bg-light">
   <div className="container-fluid">
-    <a className="navbar-brand" href="./NewsMunch">
+    <Link className="navbar-brand" to="./NewsMunch">
       News Munch
-    </a>
+    </Link>
     <button
       className="navbar-toggler"
       type="button"
@@ -29,15 +30,14 @@ export class Navbar extends Component {
     <div className="collapse navbar-collapse" id="navbarSupportedContent">
       <ul className="navbar-nav me-auto mb-2 mb-lg-0">
       
+      <li className="nav-item" ><Link className="nav-link" to="/home">Home</Link></li>   
 
-
-      <li className="nav-item"  aria-current="page"><a className="nav-link" href="/about">Business</a></li>   
-      <li className="nav-item"><a className="nav-link" href="/about">Entertainment</a></li>   
-      <li className="nav-item"><a className="nav-link" href="/about">General</a></li>   
-      <li className="nav-item"><a className="nav-link" href="/about">Health</a></li> 
-      <li className="nav-item"><a className="nav-link" href="/about">Science</a></li>  
-      <li className="nav-item"><a className="nav-link" href="/about">Sports</a></li> 
-      <li className="nav-item"><a className="nav-link" href="/about">Technology</a></li>      
+      <li className="nav-item" ><Link className="nav-link" to="/business">Business</Link></li>   
+      <li className="nav-item"><Link className="nav-link" to="/entertainment">Entertainment</Link></li>     
+      <li className="nav-item"><Link className="nav-link" to="/health">Health</Link></li> 
+      <li className="nav-item"><Link className="nav-link" to="/science">Science</Link></li>  
+      <li className="nav-item"><Link className="nav-link" to="/sports">Sports</Link></li> 
+      <li className="nav-item"><Link className="nav-link" to="/technology">Technology</Link></li>      
        
      </ul>
      
